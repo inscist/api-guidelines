@@ -100,7 +100,7 @@ Services that do so **MUST** make this clear in their documentation and clients 
 Clients **MUST NOT** rely on the order in which data appears in JSON service responses.
 For example, clients **SHOULD** be resilient to the reordering of fields within a JSON object.
 When supported by the service, clients **MAY** request that data be returned in a specific order.
-For example, services **MAY** support the use of the `orderBy` query string parameter to specify the order of elements within a JSON array.
+For example, services **MAY** support the use of the `orderBy` query parameter to specify the order of elements within a JSON array.
 Services **MAY** also explicitly specify the ordering of some elements as part of the service contract.
 For example, a service **MAY** always return a JSON object's "type" information as the first field in an object to simplify response parsing on the client.
 Clients **MAY** rely on ordering behavior explicitly identified by the service.
@@ -671,7 +671,7 @@ Sorting parameters **MUST** be consistent across pages, as both client and serve
 If a service does not support sorting by a property named in a `orderBy` expression, the service **MUST** respond with an error message as defined in the [Unsupported Requests](#12-unsupported-requests) section.
 
 ### 6.7. Filtering
-The `filter` query string parameter allows clients to filter a collection of resources that are addressed by a request URL.
+The `filter` query parameter allows clients to filter a collection of resources that are addressed by a request URL.
 The expression specified with `filter` is evaluated for each resource in the collection, and only items where the expression evaluates to true are included in the response.
 Resources for which the expression evaluates to false or to null, or which reference properties that are unavailable due to permissions, are omitted from the response.
 
@@ -886,7 +886,7 @@ Removed entities are represented using only their "id" and an "@removed" node.
 The presence of an "@removed" node **MUST** represent the removal of the entry from the set.
 
 ### 7.3. Obtaining a delta link
-A delta link is obtained by querying a collection or entity and appending a `delta` query string parameter.
+A delta link is obtained by querying a collection or entity and appending a `delta` query parameter.
 For example:
 
 ```http
@@ -918,7 +918,7 @@ Items removed from the set **MUST** be represented using only their "id" and an 
 
 ### 7.5. Using a delta link
 The client requests changes by invoking the GET method on the delta link.
-The client **MUST** use the delta URL as-is — in other words the client **MUST NOT** modify the URL in any way (e.g., parsing it and adding additional query string parameters).
+The client **MUST** use the delta URL as-is — in other words the client **MUST NOT** modify the URL in any way (e.g., parsing it and adding additional query parameters).
 In this example:
 
 ```http
@@ -1100,20 +1100,20 @@ Services are versioned using a Major.Minor versioning scheme.
 Services **MAY** opt for a "Major" only version scheme in which case the ".0" is implied and all other rules in this section apply.
 Two options for specifying the version of a REST API request are supported:
 - Embedded in the path of the request URL, at the end of the service root: `https://api.contoso.com/v1.0/products/users`
-- As a query string parameter of the URL: `https://api.contoso.com/products/users?api-version=1.0`
+- As a query parameter of the URL: `https://api.contoso.com/products/users?api-version=1.0`
 
 Guidance for choosing between the two options is as follows:
 
 1. Services co-located behind a DNS endpoint **MUST** use the same versioning mechanism.
 2. In this scenario, a consistent user experience across the endpoint is paramount. The Inscist REST API Guidelines Working Group recommends that new top-level DNS endpoints are not created without explicit conversations with your organization's leadership team.
-3. Services that guarantee the stability of their REST API's URL paths, even through future versions of the API, **MAY** adopt the query string parameter mechanism. This means the naming and structure of the relationships described in the API cannot evolve after the API ships, even across versions with breaking changes.
+3. Services that guarantee the stability of their REST API's URL paths, even through future versions of the API, **MAY** adopt the query parameter mechanism. This means the naming and structure of the relationships described in the API cannot evolve after the API ships, even across versions with breaking changes.
 4. Services that cannot ensure URL path stability across future versions **MUST** embed the version in the URL path.
 
 Certain bedrock services such as Microsoft's Azure Active Directory may be exposed behind multiple endpoints.
 Such services **MUST** support the versioning mechanisms of each endpoint, even if that means supporting multiple versioning mechanisms.
 
 #### 9.1.1. Group versioning
-Group versioning is an **OPTIONAL** feature that **MAY** be offered on services using the query string parameter mechanism.
+Group versioning is an **OPTIONAL** feature that **MAY** be offered on services using the query parameter mechanism.
 Group versions allow for logical grouping of API endpoints under a common versioning moniker.
 This allows developers to look up a single version number and use it across multiple endpoints.
 Group version numbers are well known, and services **SHOULD** reject any unrecognized values.
