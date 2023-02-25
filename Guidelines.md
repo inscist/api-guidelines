@@ -54,11 +54,6 @@ So if a service was written against version 1.0 of the guidelines, new APIs adde
 ### 4.3. Requirements language
 The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119][rfc-2119].
 
-### 4.4. License
-
-This work is licensed under the Creative Commons Attribution 4.0 International License.
-To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
-
 ## 5. Taxonomy
 As part of onboarding to Microsoft REST API Guidelines, services MUST comply with the taxonomy defined below.
 
