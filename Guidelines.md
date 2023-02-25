@@ -295,7 +295,7 @@ Consequently, a service **SHOULD** accept PII parameters transmitted as headers.
 However, there are many scenarios where the above recommendations cannot be followed due to client or software limitations.
 To address these limitations, services **SHOULD** also accept these PII parameters as part of the URL consistent with the rest of these guidelines.
 
-Services that accept PII parameters -- whether in the URL or as headers -- **SHOULD** be compliant with privacy policy specified by their organization's engineering leadership.
+Services that accept PII parameters — whether in the URL or as headers — **SHOULD** be compliant with privacy policy specified by their organization's engineering leadership.
 This will typically include recommending that clients prefer headers for transmission and implementations adhere to special precautions to ensure that logs and other service data collection are properly handled.
 
 ### 4.10. Response formats
@@ -918,7 +918,7 @@ Items removed from the set **MUST** be represented using only their "id" and an 
 
 ### 7.5. Using a delta link
 The client requests changes by invoking the GET method on the delta link.
-The client **MUST** use the delta URL as-is -- in other words the client **MUST NOT** modify the URL in any way (e.g., parsing it and adding additional query string parameters).
+The client **MUST** use the delta URL as-is — in other words the client **MUST NOT** modify the URL in any way (e.g., parsing it and adding additional query string parameters).
 In this example:
 
 ```http
