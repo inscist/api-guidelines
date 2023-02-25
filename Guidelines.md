@@ -1321,7 +1321,7 @@ An operation is a user-addressable resource that tracks a stepwise long running 
 Operations **MUST** support GET semantics.
 The GET operation against an operation **MUST** return:
 
-1. The operation resource, it's state, and any extended state relevant to the particular API.
+1. The operation resource, its state, and any extended state relevant to the particular API.
 2. `200 OK` as the response code.
 
 Services **MAY** support operation cancellation by exposing DELETE on the operation.
