@@ -58,7 +58,7 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
 As part of onboarding to Inscist REST API Guidelines, services **MUST** comply with the taxonomy defined below.
 
 ### 2.1. Errors
-Errors, or more specifically Service Errors, are defined as a client passing invalid data to the service and the service _correctly_  rejecting that data.
+Errors, or more specifically Service Errors, are defined as a client passing invalid data to the service and the service _correctly_ rejecting that data.
 Examples include invalid credentials, incorrect parameters, unknown version IDs, or similar.
 These are generally "4xx" HTTP error codes and are the result of a client passing incorrect or invalid data.
 
@@ -70,12 +70,13 @@ These are generally "5xx" HTTP error codes.
 
 Faults _do_ contribute to the overall API availability.
 
-Calls that fail due to rate limiting or quota failures **MUST NOT** count as faults.
-Calls that fail as the result of a service fast-failing requests (often for its own protection) do count as faults.
+* Rate limiting or quota failures **MUST NOT** count as faults.
+* Fast-failing requests (often for the service's protection) _do_ count as faults.
 
 ### 2.3. Latency
 Latency is defined as how long a particular API call takes to complete, measured as closely to the client as possible.
 This metric applies to both synchronous and asynchronous APIs in the same way.
+
 For long running calls, the latency is measured on the initial request and measures how long that call (not the overall operation) takes to complete.
 
 ### 2.4. Time to complete
@@ -83,6 +84,7 @@ Services that expose long operations **MUST** track "Time to Complete" metrics a
 
 ### 2.5. Long running API faults
 For a Long Running API, it's possible for both the initial request which begins the operation and the request which retrieves the results to technically work (each passing back a 200) but for the underlying operation to have failed.
+
 Long Running faults **MUST** roll up as faults into the overall Availability metrics.
 
 ## 3. Client guidance
@@ -163,20 +165,20 @@ https://api.contoso.com/v1.0/people/7011042402/inbox
 ### 4.4. Supported methods
 Operations **MUST** use the proper HTTP methods whenever possible, and operation idempotency **MUST** be respected.
 HTTP methods are frequently referred to as the HTTP verbs.
-The terms are synonymous in this context, however the HTTP specification uses the term method.
+The terms are synonymous in this context, however the HTTP specification uses the term "method".
 
 Below is a list of methods that Inscist REST services **SHOULD** support.
 Not all resources will support all methods, but all resources using the methods below **MUST** conform to their usage.
 
-Method  | Description                                                                                                                | Is Idempotent
-------- | -------------------------------------------------------------------------------------------------------------------------- | -------------
-GET     | Return the current value of an object                                                                                      | True
-PUT     | Replace an object, or create a named object, when applicable                                                               | True
-DELETE  | Delete an object                                                                                                           | True
-POST    | Create a new object based on the data provided, or submit a command                                                        | False
-HEAD    | Return metadata of an object for a GET response. Resources that support the GET method **MAY** support the HEAD method as well | True
-PATCH   | Apply a partial update to an object                                                                                        | False
-OPTIONS | Get information about a request; see below for details.                                                                    | True
+Method  | Description                                                                                                                    | Idempotent
+------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------
+GET     | Return the current value of an object                                                                                          | Yes
+PUT     | Replace an object, or create a named object, when applicable                                                                   | Yes
+DELETE  | Delete an object                                                                                                               | Yes
+POST    | Create a new object based on the data provided, or submit a command                                                            | No
+HEAD    | Return metadata of an object for a GET response. Resources that support the GET method **MAY** support the HEAD method as well | Yes
+PATCH   | Apply a partial update to an object                                                                                            | No
+OPTIONS | Get information about a request; see below for details.                                                                        | Yes
 
 <small>Table 1</small>
 
@@ -242,7 +244,7 @@ Date                              | Date                                        
 Accept                            | Content type                                     | The requested content type for the response such as: <ul><li>application/xml</li><li>text/xml</li><li>application/json</li><li>text/javascript (for JSONP)</li></ul>Per the HTTP guidelines, this is just a hint and responses **MAY** have a different content type, such as a blob fetch where a successful response will just be the blob stream as the payload. For services following OData, the preference order specified in OData **SHOULD** be followed.
 Accept-Encoding                   | Gzip, deflate                                    | REST endpoints **SHOULD** support GZIP and DEFLATE encoding, when applicable. For very large resources, services **MAY** ignore and return uncompressed data.
 Accept-Language                   | "en", "es", etc.                                 | Specifies the preferred language for the response. Services are not required to support this, but if a service supports localization it **MUST** do so through the Accept-Language header.
-Accept-Charset                    | Charset type like "UTF-8"                        | Default is UTF-8, but services **SHOULD** be able to handle ISO-8859-1.
+Accept-Charset                    | Charset type like "UTF-8"                        | Default is UTF-8, but services **SHOULD** be able to handle [ISO-8859-1][iso-8859-1] as well.
 Content-Type                      | Content type                                     | Mime type of request body (PUT/POST/PATCH)
 Prefer                            | return=minimal, return=representation            | If the return=minimal preference is specified, services **SHOULD** return an empty body in response to a successful insert or update. If return=representation is specified, services **SHOULD** return the created or updated resource in the response. Services **SHOULD** support this header if they have scenarios where clients would sometimes benefit from responses, but sometimes the response would impose too much of a hit on bandwidth.
 If-Match, If-None-Match, If-Range | String                                           | Services that support updates to resources using optimistic concurrency control **MUST** support the If-Match header to do so. Services **MAY** also use other headers related to ETags as long as they follow the HTTP specification.
@@ -287,7 +289,7 @@ The criteria for considering when to accept headers as parameters are:
 The one exception to this rule is the Accept header.
 It's common practice to use a scheme with simple names instead of the full functionality described in the HTTP specification for Accept.
 
-### 4.9. PII parameters
+### 4.9. Personally Identifiable Information parameters
 Consistent with their organization's privacy policy, clients **SHOULD NOT** transmit personally identifiable information (PII) parameters in the URL (as part of path or query string) because this information can be inadvertently exposed via client, network, and server logs and other mechanisms.
 
 Consequently, a service **SHOULD** accept PII parameters transmitted as headers.
@@ -516,7 +518,7 @@ Services used by interactive Web clients where performance is critical **SHOULD*
 
 In addition, when appropriate services **MAY** support the JSONP pattern for simple, GET-only cross-domain access.
 In JSONP, services take a parameter indicating the format (_$format=json_) and a parameter indicating a callback (_$callback=someFunc_), and return a text/javascript document containing the JSON response wrapped in a function call with the indicated name.
-More on JSONP at Wikipedia: [JSONP](https://en.wikipedia.org/wiki/JSONP).
+More at Wikipedia: [JSONP](https://en.wikipedia.org/wiki/JSONP).
 
 ## 6. Collections
 ### 6.1. Item keys
@@ -824,7 +826,7 @@ If the page size requested by the client is larger than the default page size su
 **Page Size:** Clients **MAY** request server-driven paging with a specific page size by specifying a _$maxpagesize_ preference.
 The server **SHOULD** honor this preference if the specified page size is smaller than the server's default page size.
 
-**Paginating embedded collections:** It is possible for both client-driven paging and server-driven paging to be applied to embedded collections.
+**Paginating embedded collections:** It is possible for both client and server-driven paging to be applied to embedded collections.
 If a server paginates an embedded collection, it **MUST** include additional continuation tokens as appropriate.
 
 **Recordset count:** Developers who want to know the full number of records across all pages, **MAY** include the query parameter _$count=true_ to tell the server to include the count of items in the response.
@@ -835,7 +837,7 @@ When these operations are performed together, the evaluation order **MUST** be:
 
 1. **Filtering**. This includes all range expressions performed as an AND operation.
 2. **Sorting**. The potentially filtered list is sorted according to the sort criteria.
-3. **Pagination**. The materialized paginated view is presented over the filtered, sorted list. This applies to both server-driven pagination and client-driven pagination.
+3. **Pagination**. The materialized paginated view is presented over the filtered, sorted list. This applies to both client and server-driven paging.
 
 ### 6.10. Empty Results
 When a filter is performed on a collection and the result set is empty you **MUST** respond with a valid response body and a 200 response code.
@@ -871,7 +873,7 @@ If the query contains a filter, the response **MUST** include only changes to en
 The key principles of the Delta Query are:
 - Every item in the set **MUST** have a persistent identifier. That identifier **SHOULD** be represented as "id". This identifier is a service-defined opaque string that **MAY** be used by the client to track object across calls.
 - The delta **MUST** contain an entry for each entity that newly matches the specified criteria, and **MUST** contain a "@removed" entry for each entity that no longer matches the criteria.
-- Re-evaluate the query and compare it to original set of results; every entry uniquely in the current set **MUST** be returned as an Add operation, and every entry uniquely in the original set **MUST** be returned as a "remove" operation.
+- Re-evaluate the query and compare it to original set of results; every entry uniquely in the current set **MUST** be returned as an "add" operation, and every entry uniquely in the original set **MUST** be returned as a "remove" operation.
 - Each entity that previously did not match the criteria but matches it now **MUST** be returned as an "add"; conversely, each entity that previously matched the query but no longer does **MUST** be returned as a "@removed" entry.
 - Entities that have changed **MUST** be included in the set using their standard representation.
 - Services **MAY** add additional metadata to the "@removed" node, such as a reason for removal, or a "removed at" timestamp. We recommend teams coordinate with the Inscist REST API Guidelines Working Group on extensions to help maintain consistency.
@@ -907,7 +909,7 @@ Content-Type: application/json
 }
 ```
 
-Note: If the collection is paginated the deltaLink will only be present on the final page but **MUST** reflect any changes to the data returned across all pages.
+> If the collection is paginated, the deltaLink will only be present on the final page but **MUST** reflect any changes to the data returned across all pages.
 
 ### 7.4. Contents of a delta link response
 Added/Updated entries **MUST** appear as regular JSON objects, with regular item properties.
@@ -1225,8 +1227,8 @@ Service **MAY** expose stepwise operations.
 This causes confusion, as it mixes elements of platforms ("Async / await", "promises", "futures") with elements of API operation.
 This document uses the term "Stepwise Long Running Operation" or often just "Stepwise Operation" to avoid confusion over the word "Async".
 
-Services **MUST** perform as much synchronous validation as practical on stepwise requests.
-Services **MUST** prioritize returning errors in a synchronous way, with the goal of having only "Valid" operations processed using the long running operation wire protocol.
+* Services **MUST** perform as much synchronous validation as practical on stepwise requests.
+* Services **MUST** prioritize returning errors in a synchronous way, with the goal of having only "Valid" operations processed using the long running operation wire protocol.
 
 For an API that's defined as a Stepwise Long Running Operation the service **MUST** go through the Stepwise Long Running Operation flow even if the operation can be completed immediately.
 In other words, APIs must adopt and stick with an LRO pattern and not change patterns based on circumstance.
@@ -1247,8 +1249,8 @@ Operation-Location: https://api.contoso.com/v1.0/operations/123
 
 For services that need to return a 201 Created here, use the hybrid flow described below.
 
-The 202 Accepted should return no body.
-The 201 Created case should return the body of the target resource.
+* `201 Created` case should return the body of the target resource.
+* `202 Accepted` should return no body.
 
 #### 10.2.2. POST
 Services **MAY** enable POST requests for entity creation.
@@ -1327,7 +1329,7 @@ The GET operation against an operation **MUST** return:
 Services **MAY** support operation cancellation by exposing DELETE on the operation.
 If supported DELETE operations **MUST** be idempotent.
 
-> Note: From an API design perspective, cancellation does not explicitly mean rollback.
+> From an API design perspective, cancellation does not explicitly mean rollback.
 On a per-API defined case it may mean rollback, or compensation, or completion, or partial completion, etc.
 Following a cancelled operation, It **SHOULD NOT** be a client's responsibility to return the service to a consistent state which allows continued service.
 
@@ -1532,7 +1534,7 @@ Obviously, services cannot guarantee these response times in the face of potenti
 Services should respond quickly with an error when they are generally overloaded, rather than simply respond slowly.
 Finally, many services will have quotas on calls, perhaps a number of operations per hour or day, usually related to a service plan or price.
 When these quotas are exceeded services must also provide immediate, actionable errors.
-Quotas and Limits should be scoped to a customer unit: a subscription, a tenant, an application, a plan, or without any other identification a range of ip addresses…as appropriate to the service goals so that the load is properly shared and one unit is not interfering with another.
+Quotas and Limits should be scoped to a customer unit: a subscription, a tenant, an application, a plan, or without any other identification a range of ip addresses — as appropriate to the service goals so that the load is properly shared and one unit is not interfering with another.
 
 ### 11.2. Return Codes (429 vs 503)
 HTTP specifies two return codes for these scenarios: '429 Too Many Requests' and '503 Service Unavailable'.
