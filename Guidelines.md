@@ -333,7 +333,7 @@ APIs **SHOULD** use this format even if they are not using other OData construct
 The error response **MUST** be a single JSON object.
 This object **MUST** have a name/value pair named "error". The value **MUST** be a JSON object.
 
-This object **MUST** contain name/value pairs with the names "code" and "message", and it **MAY** contain name/value pairs with the names "target", "details" and "innererror."
+This object **MUST** contain name/value pairs with the names "code" and "message", and it **MAY** contain name/value pairs with the names "target", "details" and "innererror".
 
 The value for the "code" name/value pair is a language-independent string.
 Its value is a service-defined error code that **SHOULD** be human-readable.
@@ -421,8 +421,8 @@ Example of "innererror":
 }
 ```
 
-In this example, the most basic error code is "BadArgument", but for clients that are interested, there are more specific error codes in "innererror."
-The "PasswordReuseNotAllowed" code may have been added by the service at a later date, having previously only returned "PasswordDoesNotMeetPolicy."
+In this example, the most basic error code is "BadArgument", but for clients that are interested, there are more specific error codes in "innererror".
+The "PasswordReuseNotAllowed" code may have been added by the service at a later date, having previously only returned "PasswordDoesNotMeetPolicy".
 Existing clients do not break when the new error code is added, but new clients **MAY** take advantage of it.
 The "PasswordDoesNotMeetPolicy" error also includes additional name/value pairs that allow the client to determine the server's configuration, validate the user's input programmatically, or present the server's constraints to the user within the client's own localized messaging.
 
@@ -455,7 +455,7 @@ Example of "details":
 }
 ```
 
-In this example there were multiple problems with the request, with each individual error listed in "details."
+In this example there were multiple problems with the request, with each individual error listed in "details".
 
 ### 4.11. HTTP Status Codes
 Standard HTTP Status Codes **SHOULD** be used; see the HTTP Status Code definitions for more information.
@@ -485,7 +485,7 @@ The spirit behind CORS is to avoid preflight for any simple cross-domain request
 All other requests require preflight.
 
 A request is "simple" and avoids preflight if its method is GET, HEAD or POST, and if it doesn't contain any request headers besides Accept, Accept-Language and Content-Language.
-For POST requests, the Content-Type header is also allowed, but only if its value is "application/x-www-form-urlencoded", "multipart/form-data" or "text/plain."
+For POST requests, the Content-Type header is also allowed, but only if its value is "application/x-www-form-urlencoded", "multipart/form-data" or "text/plain".
 For any other headers or values, a preflight request will happen.
 
 ### 5.2. Service guidance
@@ -495,7 +495,7 @@ At minimum, services **MUST**:
   - If the request uses the OPTIONS method and contains the Access-Control-Request-Method header, then it is a preflight request intended to probe for access before the actual request. Otherwise, it is an actual request. For preflight requests, beyond performing the steps below to add headers, services **MUST** perform no additional processing and **MUST** return a 200 OK. For non-preflight requests, the headers below are added in addition to the request's regular processing.
   - Add an Access-Control-Allow-Origin header to the response, containing the same value as the Origin request header. Note that this requires services to dynamically generate the header value. Resources that do not require cookies or any other form of [user credentials][cors-user-credentials] **MAY** respond with a wildcard asterisk (*) instead. Note that the wildcard is acceptable here only, and not for any of the other headers described below.
   - If the caller requires access to a response header that is not in the set of [simple response headers][cors-simple-headers] (Cache-Control, Content-Language, Content-Type, Expires, Last-Modified, Pragma), then add an Access-Control-Expose-Headers header containing the list of additional response header names the client should have access to.
-  - If the request requires cookies, then add an Access-Control-Allow-Credentials header set to "true."
+  - If the request requires cookies, then add an Access-Control-Allow-Credentials header set to "true".
   - If the request was a preflight request (see first bullet), then the service **MUST**:
     - Add an Access-Control-Allow-Headers response header containing the list of request header names the client is permitted to use. This list need only contain headers that are not in the set of [simple request headers][cors-simple-headers] (Accept, Accept-Language, Content-Language). If there are no restrictions on headers the service accepts, the service **MAY** simply return the same value as the Access-Control-Request-Headers header sent by the client.
     - Add an Access-Control-Allow-Methods response header containing the list of HTTP methods the caller is permitted to use.
@@ -957,7 +957,7 @@ Primitive values **MUST** be serialized to JSON following the rules of [RFC8259]
 Services **MUST** produce dates using the `DateLiteral` format, and **SHOULD** use the `Iso8601Literal` format unless there are compelling reasons to do otherwise.
 Services that do use the `StructuredDateLiteral` format **MUST NOT** produce dates using the `T` kind unless BOTH the additional precision is REQUIRED, and ECMAScript clients are explicitly unsupported.
 (Non-Normative statement: When deciding which particular `DateKind` to standardize on, the approximate order of preference is `E, C, U, W, O, X, I, T`.
-This optimizes for ECMAScript, .NET, and C++ programmers, in that order.)
+This optimizes for ECMAScript, .NET, and C++ programmers, in that order).
 
 #### 8.2.2. Consuming dates
 Services **MUST** accept dates from clients that use the same `DateLiteral` format (including the `DateKind`, if applicable) that they produce, and **SHOULD** accept dates using any `DateLiteral` format.
@@ -1063,7 +1063,7 @@ var date = new Date(serverResponse.someObject.creationDate.value);
 
 ### 8.4. Durations
 [Durations][wikipedia-iso8601-durations] need to be serialized in conformance with [ISO 8601][wikipedia-iso8601-durations].
-Durations are "represented by the format `P[n]Y[n]M[n]DT[n]H[n]M[n]S`."
+Durations are "represented by the format `P[n]Y[n]M[n]DT[n]H[n]M[n]S`".
 From the standard:
 - P is the duration designator (historically called "period") placed at the start of the duration representation.
 - Y is the year designator that follows the value for the number of years.
@@ -1075,7 +1075,7 @@ From the standard:
 - M is the minute designator that follows the value for the number of minutes.
 - S is the second designator that follows the value for the number of seconds.
 
-For example, "P3Y6M4DT12H30M5S" represents a duration of "three years, six months, four days, twelve hours, thirty minutes, and five seconds."
+For example, "P3Y6M4DT12H30M5S" represents a duration of "three years, six months, four days, twelve hours, thirty minutes, and five seconds".
 
 ### 8.5. Intervals
 [Intervals][wikipedia-iso8601-intervals] are defined as part of [ISO 8601][wikipedia-iso8601-intervals].
@@ -1090,7 +1090,7 @@ For example, "P3Y6M4DT12H30M5S" represents a duration of "three years, six month
 > Formed by adding "R[n]/" to the beginning of an interval expression, where R is used as the letter itself and [n] is replaced by the number of repetitions.
 Leaving out the value for [n] means an unbounded number of repetitions.
 
-For example, to repeat the interval of "P1Y2M10DT2H30M" five times starting at "2008-03-01T13:00:00Z", use "R5/2008-03-01T13:00:00Z/P1Y2M10DT2H30M."
+For example, to repeat the interval of "P1Y2M10DT2H30M" five times starting at "2008-03-01T13:00:00Z", use "R5/2008-03-01T13:00:00Z/P1Y2M10DT2H30M".
 
 ## 9. Versioning
 **All APIs compliant with the Inscist REST API Guidelines **MUST** support explicit versioning.** It's critical that clients can count on services to be stable over time, and it's critical that services can add features and make changes.
@@ -1552,7 +1552,7 @@ However, other headers may be appropriate for specific types of limits. In all c
 
 ### 11.4. Service Guidance
 Services should choose time windows as appropriate for the SLAs or business objectives.
-In the case of Quotas, the Retry-After time and time window may be very long (hours, days, weeks, even months. Services use 429 to indicate the specific caller has made too many calls, and 503 to indicate that the service is load shedding but that it is not the caller’s responsibility.
+In the case of Quotas, the Retry-After time and time window may be very long (hours, days, weeks, even months). Services use 429 to indicate the specific caller has made too many calls, and 503 to indicate that the service is load shedding but that it is not the caller’s responsibility.
 
 #### 11.4.1. Responsiveness
 1. Services **MUST** respond quickly in all circumstances, even when under load.
@@ -1654,7 +1654,7 @@ The call sequence for a firehose subscription **MUST** follow the diagram below.
 It shows manual registration of application and subscription, and then the end-user making use of one of the service's APIs.
 At this part of the flow, two things **MUST** be stored:
 
-1. The service **MUST** store the end-user's act of consent to receiving notifications from this specific application (typically a background usage OAUTH scope.)
+1. The service **MUST** store the end-user's act of consent to receiving notifications from this specific application (typically a background usage OAUTH scope).
 2. The subscribing application **MUST** store the end-user's tokens in order to call back for details once notified of changes.
 
 The final part of the sequence is the notification flow itself.
