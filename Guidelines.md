@@ -910,7 +910,7 @@ Content-Type: application/json
 > If the collection is paginated, the deltaLink will only be present on the final page but **MUST** reflect any changes to the data returned across all pages.
 
 ### 7.4. Contents of a delta link response
-Added/Updated entries **MUST** appear as regular JSON objects, with regular item properties.
+Added/updated entries **MUST** appear as regular JSON objects, with regular item properties.
 Returning the added/modified items in their regular representation allows the client to merge them into their existing "cache" using standard merge concepts based on the "id" field.
 
 Entries removed from the defined collection **MUST** be included in the response.
@@ -1192,7 +1192,7 @@ This section sets forth guidance around different types of long running operatio
 1. One or more clients **MUST** be able to monitor and operate on the same resource at the same time.
 2. The state of the system **SHOULD** be discoverable and testable at all times. Clients **SHOULD** be able to determine the system state even if the operation tracking resource is no longer active. The act of querying the state of a long running operation should itself leverage principles of the web. i.e. well-defined resources with uniform interface semantics. Clients **MAY** issue a GET on some resource to determine the state of a long running operation.
 3. Long running operations **SHOULD** work for clients looking to "Fire and Forget" and for clients looking to actively monitor and act upon results.
-4. Cancellation does not explicitly mean rollback. On a per-API defined case it may mean rollback, or compensation, or completion, or partial completion, etc. Following a cancelled operation, It **SHOULD NOT** be a client's responsibility to return the service to a consistent state which allows continued service.
+4. Cancellation does not explicitly mean rollback. On a per-API defined case it may mean rollback, or compensation, or completion, or partial completion, etc. Following a cancelled operation, it **SHOULD NOT** be a client's responsibility to return the service to a consistent state which allows continued service.
 
 ### 10.1. Resource-based long running operations (RELO)
 Resource-based modeling is where the status of an operation is encoded in the resource and the wire protocol used is the standard synchronous protocol.
@@ -1222,7 +1222,7 @@ This section outlines the approach that services should use to expose such long 
 Service **MAY** expose stepwise operations.
 
 > Stepwise Long Running Operations are sometimes called "Async" operations.
-This causes confusion, as it mixes elements of platforms ("Async / await", "promises", "futures") with elements of API operation.
+This causes confusion, as it mixes elements of platforms ("async / await", "promises", "futures") with elements of API operation.
 This document uses the term "Stepwise Long Running Operation" or often just "Stepwise Operation" to avoid confusion over the word "Async".
 
 * Services **MUST** perform as much synchronous validation as practical on stepwise requests.
@@ -1329,7 +1329,7 @@ If supported DELETE operations **MUST** be idempotent.
 
 > From an API design perspective, cancellation does not explicitly mean rollback.
 On a per-API defined case it may mean rollback, or compensation, or completion, or partial completion, etc.
-Following a cancelled operation, It **SHOULD NOT** be a client's responsibility to return the service to a consistent state which allows continued service.
+Following a cancelled operation, it **SHOULD NOT** be a client's responsibility to return the service to a consistent state which allows continued service.
 
 Services that do not support operation cancellation **MUST** return a 405 Method Not Allowed in the event of a DELETE.
 
@@ -1511,7 +1511,7 @@ Operation-Location: http://api.contoso.com/v1.0/operations/123
 Retry-After: 60
 ```
 
-Note: The use of the HTTP Date is inconsistent with the use of ISO 8601 Date Format used throughout this document, but is explicitly defined by the HTTP standard in [RFC 7231][rfc-7231-7-1-1-1]. Services **SHOULD** prefer the integer number of seconds (in decimal) format over the HTTP date format.
+> The use of the HTTP Date is inconsistent with the use of ISO 8601 date format used throughout this document, but is explicitly defined by the HTTP standard in [RFC 7231][rfc-7231-7-1-1-1]. Services **SHOULD** prefer the integer number of seconds (in decimal) format over the HTTP date format.
 
 ### 10.3. Retention policy for operation results
 In some situations, the result of a long running operation is not a resource that can be addressed.
