@@ -1196,7 +1196,7 @@ This section sets forth guidance around different types of long running operatio
 
 ### 10.1. Resource-based long running operations (RELO)
 Resource-based modeling is where the status of an operation is encoded in the resource and the wire protocol used is the standard synchronous protocol.
-In this model state transitions are well defined and goal states are similarly defined.
+In this model state, transitions are well defined and goal states are similarly defined.
 
 _This is the preferred model for long running operations and should be used wherever possible._ Avoiding the complexity and mechanics of the LRO Wire Protocol makes things simpler for our users and tooling chain.
 
@@ -1325,7 +1325,7 @@ The GET operation against an operation **MUST** return:
 2. `200 OK` as the response code.
 
 Services **MAY** support operation cancellation by exposing DELETE on the operation.
-If supported DELETE operations **MUST** be idempotent.
+If supported, DELETE operations **MUST** be idempotent.
 
 > From an API design perspective, cancellation does not explicitly mean rollback.
 On a per-API defined case it may mean rollback, or compensation, or completion, or partial completion, etc.
