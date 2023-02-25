@@ -42,7 +42,7 @@ Private or internal APIs **SHOULD** also try to follow these guidelines because 
  Consistency is valuable to not only external customers but also internal service consumers, and these guidelines offer best practices useful for any service.
 
 There are legitimate reasons for exemption from these guidelines.
-Obviously, a REST service that implements or must interoperate with some externally defined REST API must be compatible with that API and not necessarily these guidelines.
+Obviously, a REST service that implements or must interoperate with some externally-defined REST API must be compatible with that API and not necessarily these guidelines.
 Some services **MAY** also have special performance needs that require a different format, such as a binary protocol.
 
 ### 1.2. Guidelines for existing services and versioning of services
@@ -89,7 +89,7 @@ Long Running faults **MUST** roll up as faults into the overall Availability met
 To ensure the best possible experience for clients talking to a REST service, clients **SHOULD** adhere to the following best practices:
 
 ### 3.1. Ignore rule
-For loosely coupled clients where the exact shape of the data is not known before the call, if the server returns something the client wasn't expecting, the client **MUST** safely ignore it.
+For loosely-coupled clients where the exact shape of the data is not known before the call, if the server returns something the client wasn't expecting, the client **MUST** safely ignore it.
 
 Some services **MAY** add fields to responses without changing versions numbers.
 Services that do so **MUST** make this clear in their documentation and clients **MUST** ignore unknown fields.
@@ -261,7 +261,7 @@ ETag               | When the requested resource has an entity tag | The ETag re
 ### 4.7. Custom headers
 Custom headers **MUST NOT** be required for the basic operation of a given API.
 
-Some of the guidelines in this document prescribe the use of nonstandard HTTP headers.
+Some of the guidelines in this document prescribe the use of non-standard HTTP headers.
 In addition, some services **MAY** need to add extra functionality, which is exposed via HTTP headers.
 The following guidelines help maintain consistency across usage of custom headers.
 
@@ -345,9 +345,9 @@ Introducing a new value for "code" that is visible to existing clients is a brea
 Services can avoid breaking changes by adding new error codes to "innererror" instead.
 
 The value for the "message" name/value pair **MUST** be a human-readable representation of the error.
-It is intended as an aid to developers and is not suitable for exposure to end users.
-Services wanting to expose a suitable message for end users **MUST** do so through an [annotation][odata-json-annotations] or custom property.
-Services **SHOULD NOT** localize "message" for the end user, because doing so might make the value unreadable to the app developer who may be logging the value, as well as make the value less searchable on the Internet.
+It is intended as an aid to developers and is not suitable for exposure to end-users.
+Services wanting to expose a suitable message for end-users **MUST** do so through an [annotation][odata-json-annotations] or custom property.
+Services **SHOULD NOT** localize "message" for the end-user, because doing so might make the value unreadable to the app developer who may be logging the value, as well as make the value less searchable on the Internet.
 
 The value for the "target" name/value pair is the target of the particular error (e.g., the name of the property in error).
 
@@ -571,7 +571,7 @@ Planning for pagination is important for all services.
 Therefore, when multiple pages are available, the serialization payload **MUST** contain the opaque URL for the next page as appropriate.
 Refer to the paging guidance for more details.
 
-Clients **MUST** be resilient to collection data being either paged or nonpaged for any given request.
+Clients **MUST** be resilient to collection data being either paged or non-paged for any given request.
 
 ```json
 {
@@ -869,7 +869,7 @@ The delta link encodes the collection of entities for which changes are being tr
 
 If the query contains a filter, the response **MUST** include only changes to entities matching the specified criteria.
 The key principles of the Delta Query are:
-- Every item in the set **MUST** have a persistent identifier. That identifier **SHOULD** be represented as "id". This identifier is a service defined opaque string that **MAY** be used by the client to track object across calls.
+- Every item in the set **MUST** have a persistent identifier. That identifier **SHOULD** be represented as "id". This identifier is a service-defined opaque string that **MAY** be used by the client to track object across calls.
 - The delta **MUST** contain an entry for each entity that newly matches the specified criteria, and **MUST** contain a "@removed" entry for each entity that no longer matches the criteria.
 - Re-evaluate the query and compare it to original set of results; every entry uniquely in the current set **MUST** be returned as an Add operation, and every entry uniquely in the original set **MUST** be returned as a "remove" operation.
 - Each entity that previously did not match the criteria but matches it now **MUST** be returned as an "add"; conversely, each entity that previously matched the query but no longer does **MUST** be returned as a "@removed" entry.
@@ -918,7 +918,7 @@ Items removed from the set **MUST** be represented using only their "id" and an 
 
 ### 7.5. Using a delta link
 The client requests changes by invoking the GET method on the delta link.
-The client **MUST** use the delta URL as is -- in other words the client **MUST NOT** modify the URL in any way (e.g., parsing it and adding additional query string parameters).
+The client **MUST** use the delta URL as-is -- in other words the client **MUST NOT** modify the URL in any way (e.g., parsing it and adding additional query string parameters).
 In this example:
 
 ```http
@@ -1157,7 +1157,7 @@ PUT http://api.contoso.com/acct1/c1/b2?api-version=2011-12-07
 ### 9.2. When to version
 Services **MUST** increment their version number in response to any breaking API change.
 See the following section for a detailed discussion of what constitutes a breaking change.
-Services **MAY** increment their version number for nonbreaking changes as well, if desired.
+Services **MAY** increment their version number for non-breaking changes as well, if desired.
 
 Use a new major version number to signal that support for existing clients will be deprecated in the future.
 When introducing a new major version, services **MUST** provide a clear upgrade path for existing clients and develop a plan for deprecation that is consistent with their business group's policies.
@@ -1195,7 +1195,7 @@ This section sets forth guidance around different types of long running operatio
 4. Cancellation does not explicitly mean rollback. On a per-API defined case it may mean rollback, or compensation, or completion, or partial completion, etc. Following a cancelled operation, It **SHOULD NOT** be a client's responsibility to return the service to a consistent state which allows continued service.
 
 ### 10.1. Resource-based long running operations (RELO)
-Resource based modeling is where the status of an operation is encoded in the resource and the wire protocol used is the standard synchronous protocol.
+Resource-based modeling is where the status of an operation is encoded in the resource and the wire protocol used is the standard synchronous protocol.
 In this model state transitions are well defined and goal states are similarly defined.
 
 _This is the preferred model for long running operations and should be used wherever possible._ Avoiding the complexity and mechanics of the LRO Wire Protocol makes things simpler for our users and tooling chain.
@@ -1317,7 +1317,7 @@ Completed Operations   | Operation Creation Time
 Note that "Completed Operations" is a goal state (see below), and may actually be any of several different states such as "successful", "cancelled", "failed" and so forth.
 
 #### 10.2.5. Operation resource
-An operation is a user addressable resource that tracks a stepwise long running operation.
+An operation is a user-addressable resource that tracks a stepwise long running operation.
 Operations **MUST** support GET semantics.
 The GET operation against an operation **MUST** return:
 
@@ -1350,7 +1350,7 @@ An operation **MUST** contain, and provide in the GET response, the following in
 2. A timestamp for when the current state was entered.
 3. The operation state (notstarted / running / completed).
 
-Services **MAY** add additional, API specific, fields into the operation.
+Services **MAY** add additional, API-specific, fields into the operation.
 The operation status JSON returned looks like:
 
 ```json
@@ -1390,7 +1390,7 @@ For operations that result in, or manipulate, a resource the service **MUST** in
 
 #### 10.2.6. Operation tombstones
 Services **MAY** choose to support tombstoned operations.
-Services **MAY** choose to delete tombstones after a service defined period of time.
+Services **MAY** choose to delete tombstones after a service-defined period of time.
 
 #### 10.2.7. The typical flow, polling
 - Client invokes a stepwise operation by invoking an action using POST
@@ -1539,7 +1539,7 @@ HTTP specifies two return codes for these scenarios: '429 Too Many Requests' and
 Services should use 429 for cases where clients are making too many calls and can fix the situation by changing their call pattern.
 Services should respond with 503 in cases where general load or other problems outside the control of the individual callers is responsible for the service becoming slow.
 In all cases, services should also provide information suggesting how long the callers should wait before trying in again.
-Clients should respect these headers and also implement other transient fault handling techniques.
+Clients should respect these headers and also implement other transient fault-handling techniques.
 However, there may be clients that simply retry immediately upon failure, potentially increasing the load on the service.
 To handle this, services should design so that returning 429 or 503 is as inexpensive as possible, either by putting in special fastpath code, or ideally by depending on a common frontdoor or load balancer that provides this functionality.
 
@@ -1616,7 +1616,7 @@ See: https://docs.microsoft.com/en-us/azure/architecture/best-practices/transien
 Ideally, 429 and 503 returns are so low cost that even clients that retry immediately can be handled.
 In these cases, if possible the service team should make an effort to contact or fix the client.
 If it is a known partner, a bug or incident should be filed.
-In extreme cases it may be necessary to use DoS style protections such as blocking the caller.
+In extreme cases it may be necessary to use DoS-style protections such as blocking the caller.
 
 ## 12. Push notifications via webhooks
 ### 12.1. Scope
@@ -1646,16 +1646,16 @@ The supported subscription types are:
 
 Services that support both subscription types **SHOULD** provide differentiated developer experiences for the two types:
 
-1. Firehose – Services **MUST NOT** require developers to create code except to directly verify and respond to notifications.  Services **MUST** provide administrative UI for subscription management.  Services **SHOULD NOT** assume that end users are aware of the subscription, only the subscribing application's functionality.
-2. Per-user – Services **MUST** provide an API for developers to create and manage subscriptions as part of their app as well as verifying and responding to notifications.  Services **MAY** expect end users to be aware of subscriptions and **MUST** allow end users to revoke subscriptions where they were created directly in response to user actions.
+1. Firehose – Services **MUST NOT** require developers to create code except to directly verify and respond to notifications.  Services **MUST** provide administrative UI for subscription management.  Services **SHOULD NOT** assume that end-users are aware of the subscription, only the subscribing application's functionality.
+2. Per-user – Services **MUST** provide an API for developers to create and manage subscriptions as part of their app as well as verifying and responding to notifications.  Services **MAY** expect end-users to be aware of subscriptions and **MUST** allow end-users to revoke subscriptions where they were created directly in response to user actions.
 
 ### 12.4. Call sequences
 The call sequence for a firehose subscription **MUST** follow the diagram below.
-It shows manual registration of application and subscription, and then the end user making use of one of the service's APIs.
+It shows manual registration of application and subscription, and then the end-user making use of one of the service's APIs.
 At this part of the flow, two things **MUST** be stored:
 
-1. The service **MUST** store the end user's act of consent to receiving notifications from this specific application (typically a background usage OAUTH scope.)
-2. The subscribing application **MUST** store the end user's tokens in order to call back for details once notified of changes.
+1. The service **MUST** store the end-user's act of consent to receiving notifications from this specific application (typically a background usage OAUTH scope.)
+2. The subscribing application **MUST** store the end-user's tokens in order to call back for details once notified of changes.
 
 The final part of the sequence is the notification flow itself.
 
@@ -1673,19 +1673,19 @@ Services **SHOULD** send notifications with setup processed in either order.
 
 For a per-user subscription, app registration is either manual or automated.
 The call flow for a per-user subscription **MUST** follow the diagram below.
-It shows the end user making use of one of the service's APIs, and again, the same two things **MUST** be stored:
+It shows the end-user making use of one of the service's APIs, and again, the same two things **MUST** be stored:
 
-1. The service **MUST** store the end user's act of consent to receiving notifications from this specific application (typically a background usage OAUTH scope).
-2. The subscribing application **MUST** store the end user's tokens in order to call back for details once notified of changes.
+1. The service **MUST** store the end-user's act of consent to receiving notifications from this specific application (typically a background usage OAUTH scope).
+2. The subscribing application **MUST** store the end-user's tokens in order to call back for details once notified of changes.
 
 In this case, the subscription is set up programmatically using the end-user's token from the subscribing application.
 The app **MUST** store the ID of the registered subscription alongside the user tokens.
 
-Non normative implementation guidance: In the final part of the sequence, when an item of data in the service changes and the service needs to run the following logic:
+Non-normative implementation guidance: In the final part of the sequence, when an item of data in the service changes and the service needs to run the following logic:
 
 1. Find the set of subscriptions that correspond via resource to the data that changed.
 2. For subscriptions created under an app+user token, send a notification to the app per subscription with the subscription ID and user id of the subscription-creator.
-- For subscriptions created with an app only token, check that the owner of the changed data or any user that has visibility of the changed data has consented to notifications to the application, and if so send a set of notifications per user id to the app per subscription with the subscription ID.
+- For subscriptions created with an app-only token, check that the owner of the changed data or any user that has visibility of the changed data has consented to notifications to the application, and if so send a set of notifications per user id to the app per subscription with the subscription ID.
 
   ![User subscription setup][websequencediagram-user-subscription-setup]
 
@@ -1716,7 +1716,7 @@ Services **SHOULD** send notifications in response to service data changes that 
 2. Applications **MAY** look up any previous delta token for the relevant scope of change
 3. Applications **MUST** determine the URL to call to perform the relevant query for the new state of the service, which **MAY** be a delta query.
 
-Services that are providing notifications that will be relayed to end users **MAY** choose to add more detail to notification packets in order to reduce incoming call load on their service.
+Services that are providing notifications that will be relayed to end-users **MAY** choose to add more detail to notification packets in order to reduce incoming call load on their service.
  Such services **MUST** be clear that notifications are not guaranteed to be delivered and may be lossy or out of order.
 
 Notifications **MAY** be aggregated and sent in batches.
@@ -2107,7 +2107,7 @@ note over Developer, Automation, App Server:
      Wants to integrate with primary service like Dropbox
 end note
 note over DB Portal, DB App Registration, DB Notifications, DB Auth, DB Service: The primary service like Dropbox
-note over Client: The end users' browser or installed app
+note over Client: The end-users' browser or installed app
 
 note over Developer, Automation, App Server, DB Portal, DB App Registration, DB Notifications, Client : Manual App Registration
 
@@ -2162,7 +2162,7 @@ note over Developer, Automation, App Server:
      Wants to integrate with primary service like Dropbox
 end note
 note over DB Portal, DB App Registration, DB Notifications, DB Auth, DB Service: The primary service like Dropbox
-note over Client: The end users' browser or installed app
+note over Client: The end-users' browser or installed app
 
 note over Developer, Automation, App Server, DB Portal, DB App Registration, DB Notifications, Client : App Registration
 
