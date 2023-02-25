@@ -138,7 +138,7 @@ https://api.contoso.com/v1.0/items?url=https://resources.contoso.com/shoes/fancy
 The HTTP 1.1 message format, defined in RFC 7230, in section [3.1.1][rfc-7230-3-1-1], defines no length limit on the Request Line, which includes the target URL.
 From the RFC:
 
-> HTTP does not place a predefined limit on the length of a request-line. [...] A server that receives a request-target longer than any URI it wishes to parse **MUST** respond with a 414 (URI Too Long) status code.
+> HTTP does not place a predefined limit on the length of a request-line. [...] A server that receives a request-target longer than any URI it wishes to parse **MUST** respond with a `414 URI Too Long` status code.
 
 Services that can generate URLs longer than 2,083 characters **MUST** make accommodations for the clients they wish to support.
 Here are some sources for determining what target clients support:
@@ -213,7 +213,7 @@ Services **MAY** optionally support PUT to update existing resources, but if the
 Under UPSERT semantics, a PATCH call to a nonexistent resource is handled by the server as a "create", and a PATCH call to an existing resource is handled as an "update". To ensure that an update request is not treated as a create or vice versa, the client **MAY** specify precondition HTTP headers in the request.
 The service **MUST NOT** treat a PATCH request as an insert if it contains an If-Match header and **MUST NOT** treat a PATCH request as an update if it contains an If-None-Match header with a value of "*".
 
-If a service does not support UPSERT, then a PATCH call against a resource that does not exist **MUST** result in an HTTP "409 Conflict" error.
+If a service does not support UPSERT, then a PATCH call against a resource that does not exist **MUST** result in an HTTP `409 Conflict` error.
 
 #### 4.4.4. Options and link headers
 OPTIONS allows a client to retrieve information about a resource, at a minimum by returning the Allow header denoting the valid methods for this resource.
@@ -492,7 +492,7 @@ For any other headers or values, a preflight request will happen.
 At minimum, services **MUST**:
 - Understand the Origin request header that browsers send on cross-domain requests, and the Access-Control-Request-Method request header that they send on preflight OPTIONS requests that check for access.
 - If the Origin header is present in a request:
-  - If the request uses the OPTIONS method and contains the Access-Control-Request-Method header, then it is a preflight request intended to probe for access before the actual request. Otherwise, it is an actual request. For preflight requests, beyond performing the steps below to add headers, services **MUST** perform no additional processing and **MUST** return a 200 OK. For non-preflight requests, the headers below are added in addition to the request's regular processing.
+  - If the request uses the OPTIONS method and contains the Access-Control-Request-Method header, then it is a preflight request intended to probe for access before the actual request. Otherwise, it is an actual request. For preflight requests, beyond performing the steps below to add headers, services **MUST** perform no additional processing and **MUST** return a `200 OK`. For non-preflight requests, the headers below are added in addition to the request's regular processing.
   - Add an Access-Control-Allow-Origin header to the response, containing the same value as the Origin request header. Note that this requires services to dynamically generate the header value. Resources that do not require cookies or any other form of [user credentials][cors-user-credentials] **MAY** respond with a wildcard asterisk (*) instead. Note that the wildcard is acceptable here only, and not for any of the other headers described below.
   - If the caller requires access to a response header that is not in the set of [simple response headers][cors-simple-headers] (Cache-Control, Content-Language, Content-Type, Expires, Last-Modified, Pragma), then add an Access-Control-Expose-Headers header containing the list of additional response header names the client should have access to.
   - If the request requires cookies, then add an Access-Control-Allow-Credentials header set to "true".
@@ -838,7 +838,7 @@ When these operations are performed together, the evaluation order **MUST** be:
 3. **Pagination**. The materialized paginated view is presented over the filtered, sorted list. This applies to both client and server-driven paging.
 
 ### 6.10. Empty Results
-When a filter is performed on a collection and the result set is empty you **MUST** respond with a valid response body and a 200 response code.
+When a filter is performed on a collection and the result set is empty you **MUST** respond with a valid response body and a `200 OK` response code.
 In this example the filters supplied by the client resulted in a empty result set.
 The response body is returned as normal and the _value_ attribute is set to a empty collection.
 A client **MAY** be expecting metadata attributes like _maxItems_ based on the format of your responses to similar calls which produced results.
@@ -1245,7 +1245,7 @@ HTTP/1.1 202 Accepted
 Operation-Location: https://api.contoso.com/v1.0/operations/123
 ```
 
-For services that need to return a 201 Created here, use the hybrid flow described below.
+For services that need to return a `201 Created` here, use the hybrid flow described below.
 
 * `201 Created` case should return the body of the target resource.
 * `202 Accepted` should return no body.
@@ -1322,7 +1322,7 @@ Operations **MUST** support GET semantics.
 The GET operation against an operation **MUST** return:
 
 1. The operation resource, it's state, and any extended state relevant to the particular API.
-2. 200 OK as the response code.
+2. `200 OK` as the response code.
 
 Services **MAY** support operation cancellation by exposing DELETE on the operation.
 If supported DELETE operations **MUST** be idempotent.
@@ -1331,7 +1331,7 @@ If supported DELETE operations **MUST** be idempotent.
 On a per-API defined case it may mean rollback, or compensation, or completion, or partial completion, etc.
 Following a cancelled operation, it **SHOULD NOT** be a client's responsibility to return the service to a consistent state which allows continued service.
 
-Services that do not support operation cancellation **MUST** return a 405 Method Not Allowed in the event of a DELETE.
+Services that do not support operation cancellation **MUST** return a `405 Method Not Allowed` in the event of a DELETE.
 
 Operations **MUST** support the following states:
 
@@ -1394,8 +1394,8 @@ Services **MAY** choose to delete tombstones after a service-defined period of t
 
 #### 10.2.7. The typical flow, polling
 - Client invokes a stepwise operation by invoking an action using POST
-- The server **MUST** indicate the request has been started by responding with a 202 Accepted status code. The response **SHOULD** include the location header containing a URL that the client should poll for the results after waiting the number of seconds specified in the Retry-After header.
-- Client polls the location until receiving a 200 response with a terminal operation state.
+- The server **MUST** indicate the request has been started by responding with a `202 Accepted` status code. The response **SHOULD** include the location header containing a URL that the client should poll for the results after waiting the number of seconds specified in the Retry-After header.
+- Client polls the location until receiving a `200 OK` response with a terminal operation state.
 
 ##### Example of the typical flow, polling
 Client invokes the restart action:
@@ -1459,7 +1459,7 @@ Content-Type: application/json
 
 #### 10.2.8. The typical flow, push notifications
 1. Client invokes a long running operation by invoking an action using POST. The client has a push notification already setup on the parent resource.
-2. The service indicates the request has been started by responding with a 202 Accepted status code. The client ignores everything else.
+2. The service indicates the request has been started by responding with a `202 Accepted` status code. The client ignores everything else.
 3. Upon completion of the overall operation the service pushes a notification via the subscription on the parent resource.
 4. The client retrieves the operation result via the resource URL.
 
@@ -1702,7 +1702,7 @@ ClientState: clientOriginatedOpaqueToken (if provided by client on subscription-
 Content-Length: 0
 ```
 
-For the subscription to be set up, the application **MUST** respond with 200 OK to this request, with the _validationToken_ value as the sole entity body.
+For the subscription to be set up, the application **MUST** respond with `200 OK` to this request, with the _validationToken_ value as the sole entity body.
 Note that if the _notificationUrl_ contains query parameters, the _validationToken_ parameter must be appended with an `&`.
 
 If any challenge request does not receive the prescribed response within 5 seconds of sending the request, the service **MUST** return an error, **MUST NOT** create the subscription, and **MUST NOT** send further requests or notifications to _notificationUrl_.
@@ -1813,7 +1813,7 @@ resource        | Yes      | Resource path to watch.
 notificationUrl | Yes      | The target web hook URL.
 clientState     | No       | Opaque string passed back to the client on all notifications. Callers may choose to use this to provide tagging mechanisms.
 
-If the subscription was successfully created, the service **MUST** respond with the status code 201 CREATED and a body containing at least the following properties:
+If the subscription was successfully created, the service **MUST** respond with the status code `201 CREATED` and a body containing at least the following properties:
 
 Property Name      | Required | Notes
 ------------------ | -------- | -------------------------------------------------------------------------------------------
@@ -1983,7 +1983,7 @@ The features are:
 #### 13.2.1 Error response
 Services **MUST** provide an error response if a caller requests an unsupported feature found in the feature allow list.
 The error response **MUST** be an HTTP status code from the 4xx series, indicating that the request cannot be fulfilled.
-Unless a more specific error status is appropriate for the given request, services **SHOULD** return "400 Bad Request" and an error payload conforming to the error response guidance provided in the Inscist REST API Guidelines.
+Unless a more specific error status is appropriate for the given request, services **SHOULD** return `400 Bad Request` and an error payload conforming to the error response guidance provided in the Inscist REST API Guidelines.
 Services **SHOULD** include enough detail in the response message for a developer to determine exactly what portion of the request is not supported.
 
 Example:
