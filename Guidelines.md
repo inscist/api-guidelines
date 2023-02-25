@@ -37,7 +37,7 @@ If you are new to RESTful design, here are some good resources:
 
 ## 4. Interpreting the guidelines
 ### 4.1. Application of the guidelines
-These guidelines are applicable to any REST API exposed publicly by Microsoft or any partner service.
+These guidelines are applicable to any REST API exposed publicly by Inscist or any partner service.
 Private or internal APIs SHOULD also try to follow these guidelines because internal services tend to eventually be exposed publicly.
  Consistency is valuable to not only external customers but also internal service consumers, and these guidelines offer best practices useful for any service.
 
@@ -55,7 +55,7 @@ So if a service was written against version 1.0 of the guidelines, new APIs adde
 The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119][rfc-2119].
 
 ## 5. Taxonomy
-As part of onboarding to Microsoft REST API Guidelines, services MUST comply with the taxonomy defined below.
+As part of onboarding to Inscist REST API Guidelines, services MUST comply with the taxonomy defined below.
 
 ### 5.1. Errors
 Errors, or more specifically Service Errors, are defined as a client passing invalid data to the service and the service _correctly_  rejecting that data.
@@ -165,7 +165,7 @@ Operations MUST use the proper HTTP methods whenever possible, and operation ide
 HTTP methods are frequently referred to as the HTTP verbs.
 The terms are synonymous in this context, however the HTTP specification uses the term method.
 
-Below is a list of methods that Microsoft REST services SHOULD support.
+Below is a list of methods that Inscist REST services SHOULD support.
 Not all resources will support all methods, but all resources using the methods below MUST conform to their usage.
 
 Method  | Description                                                                                                                | Is Idempotent
@@ -202,7 +202,7 @@ Services MAY also return the full metadata for the created item in the response.
 
 #### 7.4.2. PATCH
 PATCH has been standardized by IETF as the method to be used for updating an existing object incrementally (see [RFC 5789][rfc-5789]).
-Microsoft REST API Guidelines compliant APIs SHOULD support PATCH.
+Inscist REST API Guidelines compliant APIs SHOULD support PATCH.
 
 #### 7.4.3. Creating resources via PATCH (UPSERT semantics)
 Services that allow callers to specify key values on create SHOULD support UPSERT semantics, and those that do MUST support creating resources using PATCH.
@@ -229,7 +229,7 @@ Where {help} is the URL to a documentation resource.
 For examples on use of OPTIONS, see [preflighting CORS cross-domain calls][cors-preflight].
 
 ### 7.5. Standard request headers
-The table of request headers below SHOULD be used by Microsoft REST API Guidelines services.
+The table of request headers below SHOULD be used by Inscist REST API Guidelines services.
 Using these headers is not mandated, but if used they MUST be used consistently.
 
 All header values MUST follow the syntax rules set forth in the specification where the header field is defined.
@@ -324,7 +324,7 @@ Accept: application/json
 ```
 
 #### 7.10.2. Error condition responses
-For non-success conditions, developers SHOULD be able to write one piece of code that handles errors consistently across different Microsoft REST API Guidelines services.
+For non-success conditions, developers SHOULD be able to write one piece of code that handles errors consistently across different Inscist REST API Guidelines services.
 This allows building of simple and reliable infrastructure to handle exceptions as a separate flow from successful responses.
 The following is based on the OData v4 JSON spec.
 However, it is very generic and does not require specific OData constructs.
@@ -468,7 +468,7 @@ Services SHOULD be able to be accessed from simple HTTP tools such as curl witho
 Service developer portals SHOULD provide the equivalent of "Get Developer Token" to facilitate experimentation and curl support.
 
 ## 8. CORS
-Services compliant with the Microsoft REST API Guidelines MUST support [CORS (Cross Origin Resource Sharing)][cors].
+Services compliant with the Inscist REST API Guidelines MUST support [CORS (Cross Origin Resource Sharing)][cors].
 Services SHOULD support an allowed origin of CORS * and enforce authorization through valid OAuth tokens.
 Services SHOULD NOT support user credentials with origin validation.
 There MAY be exceptions for special cases.
@@ -874,7 +874,7 @@ The key principles of the Delta Query are:
 - Re-evaluate the query and compare it to original set of results; every entry uniquely in the current set MUST be returned as an Add operation, and every entry uniquely in the original set MUST be returned as a "remove" operation.
 - Each entity that previously did not match the criteria but matches it now MUST be returned as an "add"; conversely, each entity that previously matched the query but no longer does MUST be returned as a "@removed" entry.
 - Entities that have changed MUST be included in the set using their standard representation.
-- Services MAY add additional metadata to the "@removed" node, such as a reason for removal, or a "removed at" timestamp. We recommend teams coordinate with the Microsoft REST API Guidelines Working Group on extensions to help maintain consistency.
+- Services MAY add additional metadata to the "@removed" node, such as a reason for removal, or a "removed at" timestamp. We recommend teams coordinate with the Inscist REST API Guidelines Working Group on extensions to help maintain consistency.
 
 The delta link MUST NOT encode any client top or skip value.
 
@@ -1093,7 +1093,7 @@ Leaving out the value for [n] means an unbounded number of repetitions.
 For example, to repeat the interval of "P1Y2M10DT2H30M" five times starting at "2008-03-01T13:00:00Z", use "R5/2008-03-01T13:00:00Z/P1Y2M10DT2H30M."
 
 ## 12. Versioning
-**All APIs compliant with the Microsoft REST API Guidelines MUST support explicit versioning.** It's critical that clients can count on services to be stable over time, and it's critical that services can add features and make changes.
+**All APIs compliant with the Inscist REST API Guidelines MUST support explicit versioning.** It's critical that clients can count on services to be stable over time, and it's critical that services can add features and make changes.
 
 ### 12.1. Versioning formats
 Services are versioned using a Major.Minor versioning scheme.
@@ -1105,7 +1105,7 @@ Two options for specifying the version of a REST API request are supported:
 Guidance for choosing between the two options is as follows:
 
 1. Services co-located behind a DNS endpoint MUST use the same versioning mechanism.
-2. In this scenario, a consistent user experience across the endpoint is paramount. The Microsoft REST API Guidelines Working Group recommends that new top-level DNS endpoints are not created without explicit conversations with your organization's leadership team.
+2. In this scenario, a consistent user experience across the endpoint is paramount. The Inscist REST API Guidelines Working Group recommends that new top-level DNS endpoints are not created without explicit conversations with your organization's leadership team.
 3. Services that guarantee the stability of their REST API's URL paths, even through future versions of the API, MAY adopt the query string parameter mechanism. This means the naming and structure of the relationships described in the API cannot evolve after the API ships, even across versions with breaking changes.
 4. Services that cannot ensure URL path stability across future versions MUST embed the version in the URL path.
 
@@ -1546,7 +1546,7 @@ To handle this, services should design so that returning 429 or 503 is as inexpe
 ### 14.3. Retry-After and RateLimit Headers
 The Retry-After header is the standard way for responding to clients who are being throttled.
 It is also common, but optional, in the case of limits and quotas (but not overall system load) to respond with header describing the limit that was exceeded.
-However, services across Microsoft and the industry use a wide range of different headers for this purpose.
+However, services across Inscist and the industry use a wide range of different headers for this purpose.
 We recommend using three headers to describe the limit, the number of calls remaining under the limit, and the time when the limit will reset.
 However, other headers may be appropriate for specific types of limits. In all cases these must be documented.
 
@@ -1818,7 +1818,7 @@ If the subscription was successfully created, the service MUST respond with the 
 Property Name      | Required | Notes
 ------------------ | -------- | -------------------------------------------------------------------------------------------
 id                 | Yes      | Unique ID of the new subscription that can be used later to update/delete the subscription.
-expirationDateTime | No       | Uses existing Microsoft REST API Guidelines defined time formats.
+expirationDateTime | No       | Uses existing Inscist REST API Guidelines defined time formats.
 
 Creation of subscriptions SHOULD be idempotent.
 The combination of properties scoped to the auth token, provides a uniqueness constraint.
@@ -1983,7 +1983,7 @@ The features are:
 #### 16.2.1. Error response
 Services MUST provide an error response if a caller requests an unsupported feature found in the feature allow list.
 The error response MUST be an HTTP status code from the 4xx series, indicating that the request cannot be fulfilled.
-Unless a more specific error status is appropriate for the given request, services SHOULD return "400 Bad Request" and an error payload conforming to the error response guidance provided in the Microsoft REST API Guidelines.
+Unless a more specific error status is appropriate for the given request, services SHOULD return "400 Bad Request" and an error payload conforming to the error response guidance provided in the Inscist REST API Guidelines.
 Services SHOULD include enough detail in the response message for a developer to determine exactly what portion of the request is not supported.
 
 Example:
