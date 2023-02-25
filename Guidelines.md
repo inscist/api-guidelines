@@ -100,7 +100,7 @@ Services that do so **MUST** make this clear in their documentation and clients 
 Clients **MUST NOT** rely on the order in which data appears in JSON service responses.
 For example, clients **SHOULD** be resilient to the reordering of fields within a JSON object.
 When supported by the service, clients **MAY** request that data be returned in a specific order.
-For example, services **MAY** support the use of the _$orderBy_ querystring parameter to specify the order of elements within a JSON array.
+For example, services **MAY** support the use of the _$orderBy_ query string parameter to specify the order of elements within a JSON array.
 Services **MAY** also explicitly specify the ordering of some elements as part of the service contract.
 For example, a service **MAY** always return a JSON object's "type" information as the first field in an object to simplify response parsing on the client.
 Clients **MAY** rely on ordering behavior explicitly identified by the service.
@@ -138,9 +138,7 @@ https://api.contoso.com/v1.0/items?url=https://resources.contoso.com/shoes/fancy
 The HTTP 1.1 message format, defined in RFC 7230, in section [3.1.1][rfc-7230-3-1-1], defines no length limit on the Request Line, which includes the target URL.
 From the RFC:
 
-> HTTP does not place a predefined limit on the length of a
-   request-line. [...] A server that receives a request-target longer than any URI it wishes to parse **MUST** respond
-   with a 414 (URI Too Long) status code.
+> HTTP does not place a predefined limit on the length of a request-line. [...] A server that receives a request-target longer than any URI it wishes to parse **MUST** respond with a 414 (URI Too Long) status code.
 
 Services that can generate URLs longer than 2,083 characters **MUST** make accommodations for the clients they wish to support.
 Here are some sources for determining what target clients support:
@@ -235,7 +233,7 @@ The table of request headers below **SHOULD** be used by Inscist REST API Guidel
 Using these headers is not mandated, but if used they **MUST** be used consistently.
 
 All header values **MUST** follow the syntax rules set forth in the specification where the header field is defined.
-Many HTTP headers are defined in [RFC7231][rfc-7231], however a complete list of approved headers can be found in the [IANA Header Registry][IANA-headers]."
+Many HTTP headers are defined in [RFC7231][rfc-7231], however a complete list of approved headers can be found in the [IANA Header Registry][IANA-headers].
 
 Header                            | Type                                  | Description
 --------------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -316,8 +314,8 @@ Clients **MAY** send multiple Accept headers and the service **MAY** choose one 
 
 The default response format (no Accept header provided) **SHOULD** be application/json, and all services **MUST** support application/json.
 
-Accept Header    | Response type                      | Notes
----------------- | ---------------------------------- | -------------------------------------------
+Accept Header    | Response type                          | Notes
+---------------- | -------------------------------------- | -------------------------------------------
 application/json | Payload **SHOULD** be returned as JSON | Also accept text/javascript for JSONP cases
 
 ```http
@@ -412,7 +410,7 @@ Example of "innererror":
         "code": "PasswordDoesNotMeetPolicy",
         "minLength": "6",
         "maxLength": "64",
-        "characterTypes": ["lowerCase","upperCase","number","symbol"],
+        "characterTypes": ["lowerCase", "upperCase", "number", "symbol"],
         "minDistinctCharacterTypes": "2",
         "innererror": {
           "code": "PasswordReuseNotAllowed"
@@ -491,7 +489,7 @@ For POST requests, the Content-Type header is also allowed, but only if its valu
 For any other headers or values, a preflight request will happen.
 
 ### 5.2. Service guidance
- At minimum, services **MUST**:
+At minimum, services **MUST**:
 - Understand the Origin request header that browsers send on cross-domain requests, and the Access-Control-Request-Method request header that they send on preflight OPTIONS requests that check for access.
 - If the Origin header is present in a request:
   - If the request uses the OPTIONS method and contains the Access-Control-Request-Method header, then it is a preflight request intended to probe for access before the actual request. Otherwise, it is an actual request. For preflight requests, beyond performing the steps below to add headers, services **MUST** perform no additional processing and **MUST** return a 200 OK. For non-preflight requests, the headers below are added in addition to the request's regular processing.
@@ -578,10 +576,10 @@ Clients **MUST** be resilient to collection data being either paged or non-paged
 ```json
 {
   "value":[
-    { "id": "Item 1","price": 99.95,"sizes": null},
+    { "id": "Item 1", "price": 99.95, "sizes": null},
     { … },
     { … },
-    { "id": "Item 99","price": 59.99,"sizes": null}
+    { "id": "Item 99", "price": 59.99, "sizes": null}
   ],
   "@nextLink": "{opaqueUrl}"
 }
@@ -673,7 +671,7 @@ Sorting parameters **MUST** be consistent across pages, as both client and serve
 If a service does not support sorting by a property named in a _$orderBy_ expression, the service **MUST** respond with an error message as defined in the Responding to Unsupported Requests section.
 
 ### 6.7. Filtering
-The _$filter_ querystring parameter allows clients to filter a collection of resources that are addressed by a request URL.
+The _$filter_ query string parameter allows clients to filter a collection of resources that are addressed by a request URL.
 The expression specified with _$filter_ is evaluated for each resource in the collection, and only items where the expression evaluates to true are included in the response.
 Resources for which the expression evaluates to false or to null, or which reference properties that are unavailable due to permissions, are omitted from the response.
 
@@ -1192,7 +1190,7 @@ Long running operations, sometimes called async operations, tend to mean differe
 This section sets forth guidance around different types of long running operations, and describes the wire protocols and best practices for these types of operations.
 
 1. One or more clients **MUST** be able to monitor and operate on the same resource at the same time.
-2. The state of the system **SHOULD** be discoverable and testable at all times. Clients **SHOULD** be able to determine the system state even if the operation tracking resource is no longer active. The act of querying the state of a long running operation should itself leverage principles of the web. i.e. well-defined resources with uniform interface semantics. Clients **MAY** issue a GET on some resource to determine the state of a long running operation
+2. The state of the system **SHOULD** be discoverable and testable at all times. Clients **SHOULD** be able to determine the system state even if the operation tracking resource is no longer active. The act of querying the state of a long running operation should itself leverage principles of the web. i.e. well-defined resources with uniform interface semantics. Clients **MAY** issue a GET on some resource to determine the state of a long running operation.
 3. Long running operations **SHOULD** work for clients looking to "Fire and Forget" and for clients looking to actively monitor and act upon results.
 4. Cancellation does not explicitly mean rollback. On a per-API defined case it may mean rollback, or compensation, or completion, or partial completion, etc. Following a cancelled operation, It **SHOULD NOT** be a client's responsibility to return the service to a consistent state which allows continued service.
 
@@ -1563,7 +1561,7 @@ In the case of Quotas, the Retry-After time and time window may be very long (ho
 4. Services **SHOULD NOT** introduce sleeps, pauses, etc. that block callers or are not actionable (“tar-pitting”).
 
 #### 11.4.2. Rate Limits and Quotas
-When a caller has made too many calls
+When a caller has made too many calls:
 
 1. Services **MUST** return a 429 code
 2. Services **MUST** return a standard error response describing the specifics so that a programmer can make appropriate changes
@@ -1575,7 +1573,7 @@ When a caller has made too many calls
 8. Services **MAY** return other service specific RateLimit headers as appropriate for more detailed information or specific limits or quotas
 
 #### 11.4.3. Overloaded services
-When services are generally overloaded and  load shedding
+When services are generally overloaded and load shedding:
 
 1. Services **MUST** Return a 503 code
 2. Services **MUST** Return a standard error response (see 7.10.2) describing the specifics so that a programmer can make appropriate changes
@@ -1610,9 +1608,9 @@ Callers include all users of the API: tools, portals, other services, not just u
 
 1. Callers **MUST** wait for a minimum of time indicated in a response with a Retry-After before retrying a request.
 2. Callers **MAY** assume that request is retriable after receiving a response with a Retry-After header without making any changes to the request.
-3. Clients **SHOULD** use shared SDKs and common transient fault libraries to implement the proper behavior
+3. Clients **SHOULD** use shared SDKs and common transient fault libraries to implement the proper behavior.
 
-See: https://docs.microsoft.com/en-us/azure/architecture/best-practices/transient-faults
+See: https://docs.microsoft.com/en-us/azure/architecture/best-practices/transient-faults.
 
 ### 11.6. Handling callers that ignore Retry-After headers
 Ideally, 429 and 503 returns are so low cost that even clients that retry immediately can be handled.
@@ -1633,7 +1631,7 @@ It's intended as a minimal set of requirements and as a starting point for addit
 ### 12.2. Principles
 The core principles for services that support web hooks are:
 
-1. Services **MUST** implement at least a poke/pull model. In the poke/pull model, a notification is sent to a client, and clients then send a request to get the current state or the record of change since their last notification. This approach avoids complexities around message ordering, missed messages, and change sets.  Services **MAY** add more data to provide rich notifications.
+1. Services **MUST** implement at least a poke/pull model. In the poke/pull model, a notification is sent to a client, and clients then send a request to get the current state or the record of change since their last notification. This approach avoids complexities around message ordering, missed messages, and change sets. Services **MAY** add more data to provide rich notifications.
 2. Services **MUST** implement the challenge/response protocol for configuring callback URLs.
 3. Services **SHOULD** have a recommended age-out period, with flexibility for services to vary based on scenario.
 4. Services **SHOULD** allow subscriptions that are raising successful notifications to live forever and **SHOULD** be tolerant of reasonable outage periods.
@@ -1714,8 +1712,8 @@ Services **MAY** perform additional validations on URL ownership.
 ### 12.6. Receiving notifications
 Services **SHOULD** send notifications in response to service data changes that do not include details of the changes themselves, but include enough information for the subscribing application to respond appropriately to the following process:
 
-1. Applications **MUST** identify the correct cached OAuth token to use for a callback
-2. Applications **MAY** look up any previous delta token for the relevant scope of change
+1. Applications **MUST** identify the correct cached OAuth token to use for a callback.
+2. Applications **MAY** look up any previous delta token for the relevant scope of change.
 3. Applications **MUST** determine the URL to call to perform the relevant query for the new state of the service, which **MAY** be a delta query.
 
 Services that are providing notifications that will be relayed to end-users **MAY** choose to add more detail to notification packets in order to reduce incoming call load on their service.
