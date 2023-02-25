@@ -1,63 +1,39 @@
-# Microsoft REST API Guidelines
+# Inscist REST API Guidelines
 
-## Microsoft REST API Guidelines Working Group
+[_Inspired by Microsoft's Guidelines._](https://github.com/microsoft/api-guidelines/blob/master/Guidelines.md)
 
-Name | Name | Name |
----------------------------- | -------------------------------------- | ----------------------------------------
-Dave Campbell (CTO C+E)      | Rick Rashid (CTO ASG)                  | John Shewchuk (Technical Fellow, TED HQ)
-Mark Russinovich (CTO Azure) | Steve Lucco (Technical Fellow, DevDiv) | Murali Krishnaprasad (Azure App Plat)
-Rob Howard (ASG)             | Peter Torr  (OSG)                      | Chris Mullins (ASG)
-
-<div style="font-size:150%">
-Document editors: John Gossman (C+E), Chris Mullins (ASG), Gareth Jones (ASG), Rob Dolin (C+E), Mark Stafford (C+E)<br/>
-</div>
-
-# Microsoft REST API Guidelines
-
-## 1. Abstract
-The Microsoft REST API Guidelines, as a design principle, encourages application developers to have resources accessible to them via a RESTful HTTP interface.
-To provide the smoothest possible experience for developers on platforms following the Microsoft REST API Guidelines, REST APIs SHOULD follow consistent design guidelines to make using them easy and intuitive.
-
-This document establishes the guidelines Microsoft REST APIs SHOULD follow so RESTful interfaces are developed consistently.
-
-### **Guidance for Azure service teams**
-Azure service teams should use the companion documents, [Azure REST API Guidelines](./azure/Guidelines.md) and [Considerations for Service Design](./azure/ConsiderationsForServiceDesign.md), when building or modifying their services. These documents provide a refined set of guidance targeted specifically for Azure services. For more information please refer to the [README](./azure/README.md) in the Azure folder.
-
-### **Guidance for Microsoft Graph service teams**
-Graph service teams should reference the companion document, [Graph REST API Guidelines](./graph/GuidelinesGraph.md) when building or modifying their services. This document and the associated pattern catalog provides a refined set of guidance targeted specifically for Microsoft Graph services.
-
-## 3. Introduction
-Developers access most Microsoft Cloud Platform resources via HTTP interfaces.
+Developers access most Inscist's platform resources via HTTP interfaces.
 Although each service typically provides language-specific frameworks to wrap their APIs, all of their operations eventually boil down to HTTP requests.
-Microsoft must support a wide range of clients and services and cannot rely on rich frameworks being available for every development environment.
-Thus, a goal of these guidelines is to ensure Microsoft REST APIs can be easily and consistently consumed by any client with basic HTTP support.
+Inscist must support a wide range of clients and services and cannot rely on rich frameworks being available for every development environment.
+Thus a goal of these guidelines is to ensure Inscist REST APIs can be easily and consistently consumed by any client with basic HTTP support.
 
-To provide the smoothest possible experience for developers, it's important to have these APIs follow consistent design guidelines, thus making using them easy and intuitive.
-This document establishes the guidelines to be followed by Microsoft REST API developers for developing such APIs consistently.
+To provide the smoothest possible experience for developers, it's important to have these APIs follow consistent design guidelines, so they be easy and intuitive to use.
+This document establishes those guidelines to be followed by Inscist REST API developers for developing such APIs consistently.
 
 The benefits of consistency accrue in aggregate as well; consistency allows teams to leverage common code, patterns, documentation and design decisions.
 
 These guidelines aim to achieve the following:
-- Define consistent practices and patterns for all API endpoints across Microsoft.
-- Adhere as closely as possible to accepted REST/HTTP best practices in the industry at-large. [\*]
-- Make accessing Microsoft Services via REST interfaces easy for all application developers.
+- Define consistent practices and patterns for all API endpoints across Inscist.
+- Adhere as closely as possible to accepted REST/HTTP best practices in the industry at-large.*
+- Make accessing Inscist Services via REST interfaces easy for all application developers.
 - Allow service developers to leverage the prior work of other services to implement, test and document REST endpoints defined consistently.
-- Allow for partners (e.g., non-Microsoft entities) to use these guidelines for their own REST endpoint design.
+- Allow for partners (e.g., non-Inscist entities) to use these guidelines for their own REST endpoint design.
 
-[\*] Note: The guidelines are designed to align with building services which comply with the REST architectural style, though they do not address or require building services that follow the REST constraints.
-The term "REST" is used throughout this document to mean services that are in the spirit of REST rather than adhering to REST by the book.*
+> _* The guidelines are designed to align with building services which comply with the REST architectural style, though they do not address or require building services that follow the REST constraints._
+>
+> _The term "REST" is used throughout this document to mean services that are in the spirit of REST rather than adhering to REST by the book._
 
-### 3.1. Recommended reading
+### Recommended reading
 Understanding the philosophy behind the REST Architectural Style is recommended for developing good HTTP-based services.
 If you are new to RESTful design, here are some good resources:
 
-[REST on Wikipedia][rest-on-wikipedia] -- Overview of common definitions and core ideas behind REST.
+[REST on Wikipedia][rest-on-wikipedia] — Overview of common definitions and core ideas behind REST.
 
-[REST Dissertation][fielding] -- The chapter on REST in Roy Fielding's dissertation on Network Architecture, "Architectural Styles and the Design of Network-based Software Architectures"
+[REST Dissertation][fielding] — The chapter on REST in Roy Fielding's dissertation on Network Architecture, "Architectural Styles and the Design of Network-based Software Architectures"
 
-[RFC 7231][rfc-7231] -- Defines the specification for HTTP/1.1 semantics, and is considered the authoritative resource.
+[RFC 7231][rfc-7231] — Defines the specification for HTTP/1.1 semantics, and is considered the authoritative resource.
 
-[REST in Practice][rest-in-practice] -- Book on the fundamentals of REST.
+[REST in Practice][rest-in-practice] — Book on the fundamentals of REST.
 
 ## 4. Interpreting the guidelines
 ### 4.1. Application of the guidelines
