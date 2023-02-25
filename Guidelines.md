@@ -458,7 +458,7 @@ Example of "details":
 In this example there were multiple problems with the request, with each individual error listed in "details".
 
 ### 4.11. HTTP Status Codes
-Standard HTTP Status Codes **SHOULD** be used; see the HTTP Status Code definitions for more information.
+Standard HTTP Status Codes **SHOULD** be used; see the [HTTP Status Code definitions][http-status-codes] for more information.
 
 ### 4.12. Client library optional
 Developers **MUST** be able to develop on a wide variety of platforms and languages, such as Windows, macOS, Linux, C#, Python, Node.js, and Ruby.
@@ -569,7 +569,7 @@ GET https://api.contoso.com/v1.0/people/123/addresses
 As data grows, so do collections.
 Planning for pagination is important for all services.
 Therefore, when multiple pages are available, the serialization payload **MUST** contain the opaque URL for the next page as appropriate.
-Refer to the paging guidance for more details.
+Refer to [Pagination](#68-pagination) for more details.
 
 Clients **MUST** be resilient to collection data being either paged or non-paged for any given request.
 
@@ -668,7 +668,7 @@ Will return all people whose name is David sorted in ascending order by hireDate
 #### 6.6.1. Interpreting a sorting expression
 Sorting parameters **MUST** be consistent across pages, as both client and server-side paging is fully compatible with sorting.
 
-If a service does not support sorting by a property named in a _$orderBy_ expression, the service **MUST** respond with an error message as defined in the Responding to Unsupported Requests section.
+If a service does not support sorting by a property named in a _$orderBy_ expression, the service **MUST** respond with an error message as defined in the [Unsupported Requests](#12-unsupported-requests) section.
 
 ### 6.7. Filtering
 The _$filter_ query string parameter allows clients to filter a collection of resources that are addressed by a request URL.
@@ -761,7 +761,7 @@ There are two forms of pagination that **MAY** be supported by RESTful APIs.
 Server-driven paging mitigates against denial-of-service attacks by forcibly paginating a request over multiple response payloads.
 Client-driven paging enables clients to request only the number of resources that it can use at a given time.
 
-Sorting and Filtering parameters **MUST** be consistent across pages, because both client- and server-side paging is fully compatible with both filtering and sorting.
+[Sorting](#66-sorting-collections) and [Filtering](#67-filtering) parameters **MUST** be consistent across pages, because both client- and server-side paging is fully compatible with both filtering and sorting.
 
 #### 6.8.1. Server-driven paging
 Paginated responses **MUST** indicate a partial result by including a continuation token in the response.
@@ -830,7 +830,7 @@ If a server paginates an embedded collection, it **MUST** include additional con
 **Recordset count:** Developers who want to know the full number of records across all pages, **MAY** include the query parameter _$count=true_ to tell the server to include the count of items in the response.
 
 ### 6.9. Compound collection operations
-Filtering, Sorting and Pagination operations **MAY** all be performed against a given collection.
+[Filtering](#67-filtering), [Sorting](#66-sorting-collections) and [Pagination](#68-pagination) operations **MAY** all be performed against a given collection.
 When these operations are performed together, the evaluation order **MUST** be:
 
 1. **Filtering**. This includes all range expressions performed as an AND operation.
@@ -1576,7 +1576,7 @@ When a caller has made too many calls:
 When services are generally overloaded and load shedding:
 
 1. Services **MUST** Return a 503 code
-2. Services **MUST** Return a standard error response (see 7.10.2) describing the specifics so that a programmer can make appropriate changes
+2. Services **MUST** Return a standard error response (see [Error Condition Responses](#4102-error-condition-responses)) describing the specifics so that a programmer can make appropriate changes
 3. Services **MUST** Return a Retry-After header that indicates how long clients should wait before retrying
 4. In the 503 case, the service **SHOULD NOT** return RateLimit headers
 
@@ -1635,7 +1635,7 @@ The core principles for services that support web hooks are:
 2. Services **MUST** implement the challenge/response protocol for configuring callback URLs.
 3. Services **SHOULD** have a recommended age-out period, with flexibility for services to vary based on scenario.
 4. Services **SHOULD** allow subscriptions that are raising successful notifications to live forever and **SHOULD** be tolerant of reasonable outage periods.
-5. Firehose subscriptions **MUST** be delivered only over HTTPS. Services **SHOULD** require other subscription types to be HTTPS. See the "Security" section for more details.
+5. Firehose subscriptions **MUST** be delivered only over HTTPS. Services **SHOULD** require other subscription types to be HTTPS. See the [Security](#128-security) section for more details.
 
 ### 12.3. Types of subscriptions
 There are two subscription types, and services **MAY** implement either, both, or none.
@@ -2219,6 +2219,8 @@ note right of App Server: Update status and cache new "since" token
 
 === End Text ===
 ```
+[http-status-codes]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+[iso-8859-1]: https://en.wikipedia.org/wiki/ISO/IEC_8859-1
 [fielding]: https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
 [IANA-headers]: https://www.iana.org/assignments/message-headers/message-headers.xhtml
 [rfc-2119]: https://tools.ietf.org/html/rfc2119
