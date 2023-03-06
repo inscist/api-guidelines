@@ -2057,42 +2057,42 @@ Where services have a property, whose data matches the names below, the service 
 This table will grow as services add terms that will be more commonly used.
 Service owners adding such terms **SHOULD** propose additions to this document.
 
-| |
-|------------- |
- attendees     |
- body          |
- createdDateTime |
- childCount    |
- children      |
- contentUrl    |
- country       |
- createdBy     |
- displayName   |
- errorUrl      |
- eTag          |
- event         |
- expirationDateTime |
- givenName     |
- jobTitle      |
- kind          |
- id            |
- lastModifiedDateTime |
- location      |
- memberOf      |
- message       |
- name          |
- owner         |
- people        |
- person        |
- postalCode    |
- photo         |
- preferredLanguage |
- properties    |
- signInName    |
- surname       |
- tags          |
- userPrincipalName |
- webUrl        |
+|                      |
+|--------------------- |
+| attendees            |
+| body                 |
+| createdDateTime      |
+| childCount           |
+| children             |
+| contentUrl           |
+| country              |
+| createdBy            |
+| displayName          |
+| errorUrl             |
+| eTag                 |
+| event                |
+| expirationDateTime   |
+| givenName            |
+| jobTitle             |
+| kind                 |
+| id                   |
+| lastModifiedDateTime |
+| location             |
+| memberOf             |
+| message              |
+| name                 |
+| owner                |
+| people               |
+| person               |
+| postalCode           |
+| photo                |
+| preferredLanguage    |
+| properties           |
+| signInName           |
+| surname              |
+| tags                 |
+| userPrincipalName    |
+| webUrl               |
 
 ## 15. Appendix
 ### 15.1. Sequence diagram notes
