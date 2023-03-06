@@ -7,7 +7,7 @@ We publish these guidelines here with the aim of fostering dialogue and learning
 We further hope that these guidelines may encourage other organizations to create guidelines that are appropriate for them and in turn, if they are able, to publish theirs.
 
 ### Inspired by Microsoft
-These guidelines were heavily inspired by the [Microsoft REST API Guidelines](https://github.com/microsoft/api-guidelines). For the most part, we have kept the original guidelines intact. To see the changes we have made, please refer to the [CHANGELOG](CHANGELOG.md).
+These guidelines were heavily inspired by the [Microsoft REST API Guidelines](https://github.com/microsoft/api-guidelines). For the most part, we have kept the original guidelines intact. To see the changes we have made, please refer to the [comparison docs](Comparison%20to%20Microsoft.md).
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
