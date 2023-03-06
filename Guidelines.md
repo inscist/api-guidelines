@@ -948,7 +948,7 @@ If the delta link is no longer valid, the service **MUST** respond with _410 Gon
 
 ## 8. JSON standardizations
 ### 8.1. JSON formatting standardization for primitive types
-Primitive values **MUST** be serialized to JSON following the rules of [RFC8259][rfc-8259].
+Primitive values **MUST** be serialized to JSON following the rules of [RFC 8259][rfc-8259].
 
 **Important note for 64bit integers:** JavaScript will silently truncate integers larger than `Number.MAX_SAFE_INTEGER` (2^53-1) or numbers smaller than `Number.MIN_SAFE_INTEGER` (-2^53+1). If the service is expected to return integer values outside the range of safe values, strongly consider returning the value as a string in order to maximize interoperability and avoid data loss.
 
@@ -2221,6 +2221,7 @@ note right of App Server: Update status and cache new "since" token
 ```
 [http-status-codes]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [iso-8859-1]: https://en.wikipedia.org/wiki/ISO/IEC_8859-1
+[rfc-8259]: https://tools.ietf.org/html/rfc8259
 [fielding]: https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
 [IANA-headers]: https://www.iana.org/assignments/message-headers/message-headers.xhtml
 [rfc-2119]: https://tools.ietf.org/html/rfc2119
